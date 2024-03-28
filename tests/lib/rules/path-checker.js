@@ -9,23 +9,39 @@
 //------------------------------------------------------------------------------
 
 const rule = require("../../../lib/rules/path-checker"),
-  RuleTester = require("eslint").RuleTester;
+    RuleTester = require("eslint").RuleTester;
 
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+    parserOptions: {ecmaVersion: 6, sourceType: 'module'}
+});
 ruleTester.run("path-checker", rule, {
-  valid: [
-    // give me some code that won't trigger a warning
-  ],
+    valid: [
+        {
+            filename: 'C:\\User\\tim\\Desktop\\javascript\\production_project\\src\\entity/Article',
+            code: "import { addCommentForArticle, addCommentFormReducer } from '../../model/slices/addCommentForArticle';",
+            errors: [{message: "In one slice environment paths should be relative"}],
+        },
+    ],
 
-  invalid: [
-    {
-      code: "",
-      errors: [{ message: "Fill me in.", type: "Me too" }],
-    },
-  ],
+    invalid: [
+        {
+            filename: 'C:\\User\\tim\\Desktop\\javascript\\production_project\\src\\entity/Article',
+            code: "import { addCommentForArticle, addCommentFormReducer } from 'entity/Article/model/slices/addCommentForArticle';",
+            errors: [{message: "In one slice environment paths should be relative"}],
+        }, {
+            filename: 'C:\\User\\tim\\Desktop\\javascript\\production_project\\src\\entity/Article',
+            code: "import { addCommentForArticle, addCommentFormReducer } from '@/entity/Article/model/slices/addCommentForArticle';",
+            errors: [{message: "In one slice environment paths should be relative"}],
+            options: [
+                {
+                    alias: '@'
+                }
+            ]
+        },
+    ],
 });
