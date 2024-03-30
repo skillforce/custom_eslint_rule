@@ -42,7 +42,7 @@ ruleTester.run("public-api-imports", rule, {
   invalid: [
     {
       code: "import { addCommentFormActions, addCommentFormReducer } from '@/entity/Article/model/file.ts'",
-      errors: [{ message: "Absolute import is allowed only from public API(index.ts)"}],
+      errors: [{ message: 'Absolute import is allowed only from public API(index.ts)'}],
       options: aliasOptions,
     },
     {
@@ -54,14 +54,14 @@ ruleTester.run("public-api-imports", rule, {
         testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
       }],
     },
-    // {
-    //   filename: 'C:\\Users\\tim\\Desktop\\javascript\\production_project\\src\\entity\\forbidden.ts',
-    //   code: "import { addCommentFormActions, addCommentFormReducer } from '@/entity/Article/testing'",
-    //   errors: [{message: 'Absolute import is allowed only from public API(index.ts)'}],
-    //   options: [{
-    //     alias: '@',
-    //     testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
-    //   }],
-    // }
+    {
+      filename: 'C:\\Users\\tim\\Desktop\\javascript\\production_project\\src\\entity\\forbidden.ts',
+      code: "import { addCommentFormActions, addCommentFormReducer } from '@/entity/Article/testing'",
+      errors: [{message:'Testing data has to be imported from Public API'}],
+      options: [{
+        alias: '@',
+        testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
+      }],
+    }
   ],
 });
