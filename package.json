@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-skillforce-fsd-plugin",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "test plugin for ulbitv project",
   "keywords": [
     "eslint",
